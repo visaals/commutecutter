@@ -11,7 +11,7 @@ app.get('/api/passwords', (req, res) => {
   const count = 5;
 
   // Generate some passwords
-  const hello = "Hello World! -- visaal"
+  const hello = [1,2,3]
 
   // Return them as json
   res.json(hello);
