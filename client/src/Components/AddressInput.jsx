@@ -1,9 +1,11 @@
 import React from "react"
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/Form'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import ToggleButton from 'react-bootstrap/ToggleButton'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
+import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 
 const AddressInput = (props) => {
@@ -32,12 +34,44 @@ const AddressInput = (props) => {
               type='string'
             />
             <InputGroup.Append>
-              <Button 
-                onClick={props.deleteRow}            
-                data-id={val.id}
+            <ButtonToolbar>
+              {/* commute type */}
+              <ToggleButtonGroup 
+                name="commute type" 
+                type="radio"
+                defaultValue={1}
               >
-                Delete Address
-              </Button>
+                <ToggleButton value={1}>Car</ToggleButton>
+                <ToggleButton value={2}>Bike</ToggleButton>
+                <ToggleButton value={3}>Public Transport</ToggleButton>
+              </ToggleButtonGroup>
+              {/* commute frequency */}
+
+              <ToggleButtonGroup 
+                name="commute frequency"
+                type="radio"
+                defaultValue={1}
+              >
+                <ToggleButton value={1}>1</ToggleButton>
+                <ToggleButton value={2}>2</ToggleButton>
+                <ToggleButton value={3}>3</ToggleButton>
+                <ToggleButton value={4}>4</ToggleButton>
+                <ToggleButton value={5}>5</ToggleButton>
+                <ToggleButton value={6}>6</ToggleButton>
+                <ToggleButton value={7}>7</ToggleButton>
+              </ToggleButtonGroup>
+              {/* delete */}
+
+              <ButtonGroup toggle="true">
+                <Button 
+                  onClick={props.deleteRow}            
+                  data-id={val.id}
+                >
+                  Delete Address
+                </Button>
+              </ButtonGroup>
+
+             </ButtonToolbar>  
             </InputGroup.Append>
           </InputGroup>
           
