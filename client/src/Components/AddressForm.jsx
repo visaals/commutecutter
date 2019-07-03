@@ -1,17 +1,22 @@
 import React from "react"
 import AddressInput from "./AddressInput.jsx"
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
 
 class AddressForm extends React.Component {
   constructor() {
     super();
     this.counter = 0
+
   }
   state = {
-    addresses: [{address:"", id:0}],
+    addresses: [{id:0, address:""}],
   }
 
   handleChange = (e) => {
-      if (["address"].includes(e.target.className) ) {
+      if (["address form-control"].includes(e.target.className) ) {
         let addresses = [...this.state.addresses].map(element => {
           if (element.id == e.target.dataset.id) {
             element.address = e.target.value
@@ -22,31 +27,18 @@ class AddressForm extends React.Component {
       } 
   }
 
-  addAddress = (e) => {
+  addRow = (e) => {
       this.setState((prevState) => ({
         addresses: [...prevState.addresses, {address:"", id:this.counter}],
       }));
       this.counter++
   }
 
-  deleteAddress = (e) => {
-      console.log("delete button pressed");
-      console.log(e.target.dataset.id);
+  deleteRow = (e) => {
+
       let deleteId = e.target.dataset.id
-
       this.setState((prevState) => {
-        let addresses = [...prevState.addresses]
-        let newAddresses  = addresses.filter(element => element.id != deleteId)
-
-        newAddresses.sort(function(x,y) {
-          if (x.id < y.id) return -1
-          if (x.id > y.id) return 1
-          return 0
-        })
-        console.log(newAddresses)
-        
-
-
+        let newAddresses  = [...prevState.addresses].filter(element => element.id != deleteId)
         return {addresses: newAddresses}
       });
 
@@ -57,11 +49,15 @@ class AddressForm extends React.Component {
   render() {
       let {addresses} = this.state
       return (
-        <form onSubmit={this.handleSubmit} onChange={this.handleChange} >
-          <button onClick={this.addAddress}>Add Address</button>
-          <AddressInput addresses={addresses} deleteAddress={this.deleteAddress}/>
-          <input type="submit" value="Submit" /> 
-        </form>
+        <div className="AddressForm">
+          <Form onSubmit={this.handleSubmit} onChange={this.handleChange} >
+            <Button onClick={this.addRow}>Add Address</Button>
+            <Form.Group>
+              <AddressInput addresses={addresses} deleteRow={this.deleteRow}/>
+            </Form.Group>
+            <Button type="submit" value="Submit">Submit</Button> 
+          </Form>
+        </div>
       )
   }
 }

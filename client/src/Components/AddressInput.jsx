@@ -1,26 +1,46 @@
 import React from "react"
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import FormControl from 'react-bootstrap/Form'
+
+import InputGroup from 'react-bootstrap/InputGroup'
 
 const AddressInput = (props) => {
+
+  const onChange = (e) => {
+      // here to get rid of warning
+  }
   return (
     props.addresses.map((val, idx)=> {
       let addressName = `address-${idx}`
       return (
         <div key={idx}>
-          <label htmlFor={addressName}>{`Address #${idx + 1}`}</label>
-          <input
-            type="text"
-            name={addressName}
-            data-id={val.id}
-            id={val.id}
-            value={val.address} 
-            className="address"
-          />
-          <button 
-            onClick={props.deleteAddress}            
-            data-id={val.id}
-          >
-            Delete Address
-          </button>
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text htmlFor={addressName}>{`Address #${idx + 1}`}</InputGroup.Text>
+            </InputGroup.Prepend>
+            <Form.Control
+              as='input'
+              placeholder="Enter an address of a potential home"
+              name={addressName}
+              data-id={val.id}
+              id={val.id}
+              value={val.address} 
+              onChange={onChange}
+              className={"address"}
+              type='string'
+            />
+            <InputGroup.Append>
+              <Button 
+                onClick={props.deleteRow}            
+                data-id={val.id}
+              >
+                Delete Address
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+          
 
         </div>
       )

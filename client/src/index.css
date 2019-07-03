@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+form {
+  background-color: azure;
+}
+
+label {
+  background-color: aqua;
+}
+
+.className {
+  background-color: blue;
+}
+
