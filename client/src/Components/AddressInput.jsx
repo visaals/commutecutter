@@ -4,12 +4,10 @@ import Button from 'react-bootstrap/Button'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
-
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 
 const AddressInput = (props) => {
-
   const onChange = (e) => {
       // here to get rid of warning
   }
@@ -30,27 +28,31 @@ const AddressInput = (props) => {
               id={val.id}
               value={val.address} 
               onChange={onChange}
-              className={"address"}
+              className="address"
               type='string'
             />
             <InputGroup.Append>
             <ButtonToolbar>
               {/* commute type */}
               <ToggleButtonGroup 
-                name="commute type" 
+                name={"commuteType-"+val.id}
                 type="radio"
-                defaultValue={1}
+                value={val.commuteType}
+                onChange={onChange}
               >
-                <ToggleButton value={1}>Car</ToggleButton>
-                <ToggleButton value={2}>Bike</ToggleButton>
-                <ToggleButton value={3}>Public Transport</ToggleButton>
+                <ToggleButton value={1}>Driving</ToggleButton>
+                <ToggleButton value={2}>Transit</ToggleButton>
+                <ToggleButton value={3}>Walking</ToggleButton>
+                <ToggleButton value={4}>Cycling</ToggleButton>
+
               </ToggleButtonGroup>
               {/* commute frequency */}
-
+              
               <ToggleButtonGroup 
-                name="commute frequency"
+                name={"commuteFrequency-"+val.id}
                 type="radio"
-                defaultValue={1}
+                value={val.commuteFrequency}
+                onChange={onChange}
               >
                 <ToggleButton value={1}>1</ToggleButton>
                 <ToggleButton value={2}>2</ToggleButton>
@@ -62,7 +64,7 @@ const AddressInput = (props) => {
               </ToggleButtonGroup>
               {/* delete */}
 
-              <ButtonGroup toggle="true">
+              <ButtonGroup >
                 <Button 
                   onClick={props.deleteRow}            
                   data-id={val.id}
@@ -74,8 +76,6 @@ const AddressInput = (props) => {
              </ButtonToolbar>  
             </InputGroup.Append>
           </InputGroup>
-          
-
         </div>
       )
     })

@@ -1,59 +1,79 @@
 import React from "react"
 import AddressInput from "./AddressInput.jsx"
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import InputGroup from 'react-bootstrap/InputGroup'
 
 class AddressForm extends React.Component {
   constructor() {
     super();
     this.counter = 0
-
   }
+
   state = {
-    addresses: [{id:0, address:""}],
+    rows: [{id:0, address:"", commuteType:1, commuteFrequency:7}],
   }
 
   handleChange = (e) => {
+      let nameId = e.target.name.split('-')
+      let targetName = nameId[0]
+      let datasetId = parseInt(nameId[1])
+      console.log(e.target.value)
       if (["address form-control"].includes(e.target.className) ) {
-        let addresses = [...this.state.addresses].map(element => {
+        let rows = [...this.state.rows].map(element => {
           if (element.id == e.target.dataset.id) {
             element.address = e.target.value
           }
           return element
         })
-        this.setState({ addresses }, () => console.log(this.state.addresses))
+        this.setState({ rows }, () => console.log(this.state.rows))
       } 
+      else if (["commuteType"].includes(targetName) ) {
+        let rows = [...this.state.rows].map(element => {
+          if (element.id == datasetId) {
+            element.commuteType = parseInt(e.target.value)
+          }
+          return element
+        })
+        this.setState({ rows }, () => console.log(this.state.rows))
+      }
+      else if (["commuteFrequency"].includes(targetName) ) {
+        let rows = [...this.state.rows].map(element => {
+          if (element.id == datasetId) {
+            element.commuteFrequency = parseInt(e.target.value)
+          }
+          return element
+        })
+        this.setState({ rows }, () => console.log(this.state.rows))
+      }
   }
 
   addRow = (e) => {
+     this.counter++
+     let curr = this.counter
       this.setState((prevState) => ({
-        addresses: [...prevState.addresses, {address:"", id:this.counter}],
+        rows: [...prevState.rows, {id:curr, address:"", commuteType:1, commuteFrequency:7}],
       }));
-      this.counter++
   }
 
   deleteRow = (e) => {
-
       let deleteId = e.target.dataset.id
+      console.log("deleting: " + e.target.dataset.id)
       this.setState((prevState) => {
-        let newAddresses  = [...prevState.addresses].filter(element => element.id != deleteId)
-        return {addresses: newAddresses}
+        let newAddresses  = [...prevState.rows].filter(element => element.id != deleteId)
+        return {rows: newAddresses}
       });
-
   }
 
   handleSubmit = (e) => { e.preventDefault() }
 
   render() {
-      let {addresses} = this.state
+      let {rows} = this.state
       return (
         <div className="AddressForm">
           <Form onSubmit={this.handleSubmit} onChange={this.handleChange} >
             <Button onClick={this.addRow}>Add Address</Button>
             <Form.Group>
-              <AddressInput addresses={addresses} deleteRow={this.deleteRow}/>
+              <AddressInput addresses={rows} deleteRow={this.deleteRow}/>
             </Form.Group>
             <Button type="submit" value="Submit">Submit</Button> 
           </Form>
