@@ -14,37 +14,19 @@ class AddressForm extends React.Component {
   }
 
   handleChange = (e) => {
-      let nameId = e.target.name.split('-')
-      let targetName = nameId[0]
-      let datasetId = parseInt(nameId[1])
-      console.log(e.target.value)
-      if (["address form-control"].includes(e.target.className) ) {
-        let rows = [...this.state.rows].map(element => {
-          if (element.id == e.target.dataset.id) {
-            element.address = e.target.value
+      let targetName = e.target.name.split('-')[0]
+      let targetRowId = parseInt(e.target.name.split('-')[1])
+      let rows = [...this.state.rows].map(row => {
+        if (row.id == targetRowId) {
+          if (targetName === "address") {
+            row[targetName] = e.target.value
+          } else {
+            row[targetName] = parseInt(e.target.value)
           }
-          return element
-        })
-        this.setState({ rows }, () => console.log(this.state.rows))
-      } 
-      else if (["commuteType"].includes(targetName) ) {
-        let rows = [...this.state.rows].map(element => {
-          if (element.id == datasetId) {
-            element.commuteType = parseInt(e.target.value)
-          }
-          return element
-        })
-        this.setState({ rows }, () => console.log(this.state.rows))
-      }
-      else if (["commuteFrequency"].includes(targetName) ) {
-        let rows = [...this.state.rows].map(element => {
-          if (element.id == datasetId) {
-            element.commuteFrequency = parseInt(e.target.value)
-          }
-          return element
-        })
-        this.setState({ rows }, () => console.log(this.state.rows))
-      }
+        }
+        return row
+      })
+      this.setState({ rows }, () => console.log(this.state.rows))
   }
 
   addRow = (e) => {

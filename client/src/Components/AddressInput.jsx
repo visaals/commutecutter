@@ -23,7 +23,7 @@ const AddressInput = (props) => {
             <Form.Control
               as='input'
               placeholder="Enter an address of a potential home"
-              name={addressName}
+              name={"address-"+val.id}
               data-id={val.id}
               id={val.id}
               value={val.address} 
