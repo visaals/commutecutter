@@ -24,8 +24,6 @@ const AddressInput = (props) => {
               as='input'
               placeholder="Enter an address of a potential home"
               name={"address-"+val.id}
-              data-id={val.id}
-              id={val.id}
               value={val.address} 
               onChange={onChange}
               className="address"
@@ -44,10 +42,8 @@ const AddressInput = (props) => {
                 <ToggleButton value={2}>Transit</ToggleButton>
                 <ToggleButton value={3}>Walking</ToggleButton>
                 <ToggleButton value={4}>Cycling</ToggleButton>
-
               </ToggleButtonGroup>
               {/* commute frequency */}
-              
               <ToggleButtonGroup 
                 name={"commuteFrequency-"+val.id}
                 type="radio"
@@ -63,7 +59,6 @@ const AddressInput = (props) => {
                 <ToggleButton value={7}>7</ToggleButton>
               </ToggleButtonGroup>
               {/* delete */}
-
               <ButtonGroup >
                 <Button 
                   onClick={props.deleteRow}            
@@ -72,7 +67,6 @@ const AddressInput = (props) => {
                   Delete Address
                 </Button>
               </ButtonGroup>
-
              </ButtonToolbar>  
             </InputGroup.Append>
           </InputGroup>
