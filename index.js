@@ -1,7 +1,8 @@
+
 const express = require('express');
 const path = require('path');
 const app = express();
-const APIKEY = 'AIzaSyDaIHOJKXakwWAF-M76SFAJwnL8un-56_k';
+const config = require('./config');
 
 
 // Serve static files from the React app
@@ -20,7 +21,7 @@ app.get('/api/passwords', (req, res) => {
 
 app.get('/api/directions', (req, res) => {
   const googleMapsClient = require('@google/maps').createClient({
-    key: APIKEY,
+    key: config.APIKEY,
     Promise: Promise
   });
 
@@ -36,7 +37,7 @@ app.get('/api/directions', (req, res) => {
     return response.json.results[0].geometry.location;
   }
   function handleGeocodeFailure (error) {
-    console.log("Geocode Request Failed: " + error);
+    console.log("Geocode Request Failed: " + JSON.stringify(error));
   }
 
   Promise.all([getSourceLatLng, getDestinationLatLng]).then(getRoute);
