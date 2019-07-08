@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
-
 const app = express();
+const APIKEY = 'AIzaSyDaIHOJKXakwWAF-M76SFAJwnL8un-56_k';
+
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -15,6 +16,54 @@ app.get('/api/passwords', (req, res) => {
   res.json(arr);
 
   console.log(`Sent test API response`);
+});
+
+app.get('/api/directions', (req, res) => {
+  const googleMapsClient = require('@google/maps').createClient({
+    key: APIKEY,
+    Promise: Promise
+  });
+
+  var getSourceLatLng = googleMapsClient.geocode({
+    address: '2000 Paris Metz Rd. Chattanooga, TN'
+  }).asPromise().then(geocodeAddress).catch(handleGeocodeFailure);
+
+  var getDestinationLatLng = googleMapsClient.geocode({
+    address: '227 Oakwood Court Winston-Salem, NC'
+  }).asPromise().then(geocodeAddress).catch(handleGeocodeFailure);
+
+  function geocodeAddress (response) {
+    return response.json.results[0].geometry.location;
+  }
+  function handleGeocodeFailure (error) {
+    console.log("Geocode Request Failed: " + error);
+  }
+
+  Promise.all([getSourceLatLng, getDestinationLatLng]).then(getRoute);
+
+  function getRoute (srcDst) {
+    let sourceLatLng = srcDst[0];
+    let destinationLatLng = srcDst[1];
+    console.log(...srcDst)
+    let query = {
+      origin: sourceLatLng,
+      destination: destinationLatLng
+    }
+    googleMapsClient.directions(query).asPromise().then(showRoute);
+  }
+
+  function showRoute (response) {
+    console.log(response);
+    let legs = response.json.routes[0].legs[0];
+    let distance = legs.distance;
+    let duration = legs.duration;
+    let startAddress = legs.start_address;
+    let endAddress = legs.end_address;
+    let route = [distance, duration, startAddress, endAddress];
+    console.log(route);
+    res.json(route);
+  }
+
 });
 
 // The "catchall" handler: for any request that doesn't
