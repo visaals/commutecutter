@@ -10,7 +10,7 @@ class AddressForm extends React.Component {
   }
 
   state = {
-    rows: [{id:0, address:"", commuteType:1, commuteFrequency:7}],
+    rows: [{id:0, address:"", commuteType:1, commuteDaysPerWeek:7}],
   }
 
   handleChange = (e) => {
@@ -33,7 +33,7 @@ class AddressForm extends React.Component {
      this.counter++
      let curr = this.counter
       this.setState((prevState) => ({
-        rows: [...prevState.rows, {id:curr, address:"", commuteType:1, commuteFrequency:7}],
+        rows: [...prevState.rows, {id:curr, address:"", commuteType:1, commuteDaysPerWeek:7}],
       }));
   }
 

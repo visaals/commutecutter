@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.post('/api/directions', (req, res) => {
-  directionsController.getRoute(req, res).then(
+  directionsController.getRoute(req).then(
     (route) => res.json(route)
     );
 });

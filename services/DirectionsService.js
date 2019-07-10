@@ -1,16 +1,18 @@
 var exports = module.exports = {};
-const config = require('../config');
+const constants = require('../constants');
 
 const googleMapsClient = require('@google/maps').createClient({
-    key: config.APIKEY,
+    key: constants.APIKEY,
     Promise: Promise
 });
 
-exports.computeRoute = function (srcDst) {
-    console.log(...srcDst)
+exports.computeRoute = function (geocodedRouteQuery) {
+    console.log(...geocodedRouteQuery)
     let query = {
-      origin: srcDst[0],
-      destination: srcDst[1],
+      origin: geocodedRouteQuery[0],
+      destination: geocodedRouteQuery[1],
+      mode: geocodedRouteQuery[2],
+      optimize: true
     }
     return googleMapsClient.directions(query).asPromise();
 }

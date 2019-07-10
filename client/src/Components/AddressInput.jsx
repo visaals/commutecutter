@@ -7,10 +7,12 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 
+
 const AddressInput = (props) => {
   const onChange = (e) => {
       // here to get rid of warning
   }
+  let constants = require('../constants')
   return (
     props.addresses.map((val, idx)=> {
       let addressName = `address-${idx}`
@@ -38,16 +40,16 @@ const AddressInput = (props) => {
                 value={val.commuteType}
                 onChange={onChange}
               >
-                <ToggleButton value={1}>Driving</ToggleButton>
-                <ToggleButton value={2}>Transit</ToggleButton>
-                <ToggleButton value={3}>Walking</ToggleButton>
-                <ToggleButton value={4}>Cycling</ToggleButton>
+                <ToggleButton value={constants.DRIVING}>Driving</ToggleButton>
+                <ToggleButton value={constants.TRANSIT}>Transit</ToggleButton>
+                <ToggleButton value={constants.WALKING}>Walking</ToggleButton>
+                <ToggleButton value={constants.BICYCLING}>Bicycling</ToggleButton>
               </ToggleButtonGroup>
               {/* commute frequency */}
               <ToggleButtonGroup 
-                name={"commuteFrequency-"+val.id}
+                name={"commuteDaysPerWeek-"+val.id}
                 type="radio"
-                value={val.commuteFrequency}
+                value={val.commuteDaysPerWeek}
                 onChange={onChange}
               >
                 <ToggleButton value={1}>1</ToggleButton>
@@ -75,24 +77,4 @@ const AddressInput = (props) => {
     })
   )
 }
-
 export default AddressInput;
-
-
-
-/**
- * 
- * <Form>
-                <Form.Group controlId="formAddress">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control type="text" placeholder="Enter an address of a potential home" onChange={this.handleChange}/>
-                    <Form.Text className="text-muted">
-                    We'll never share your address with anyone else.
-                    </Form.Text>
-                </Form.Group>
-                <Button variant="primary" type="submit" onSubmit={this.onSubmit}>
-                    Submit
-                </Button>
-            </Form>
- * 
- */
