@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const config = require('../config');
 const directionsController = require('../controllers/DirectionsController');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
