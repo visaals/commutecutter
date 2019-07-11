@@ -1,2 +1,3 @@
 node_modules
-client/src/constants.js
+/client/src/constants.js
+constants.js

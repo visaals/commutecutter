@@ -15,6 +15,11 @@ app.post('/api/directions', (req, res) => {
     );
 });
 
+// should take in an array of addresses and commute locations and return 
+app.post('/api/bulk-directions', (req, res) => {
+  directionsController.getBulkRoutes(req).then(routes => res.json(routes));
+});
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
