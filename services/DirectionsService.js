@@ -12,7 +12,8 @@ exports.computeRoute = function (geocodedRouteQuery) {
       origin: geocodedRouteQuery[0],
       destination: geocodedRouteQuery[1],
       mode: geocodedRouteQuery[2],
-      optimize: true
+      departure_time: new Date().getTime(),
+      traffic_model: "pessimistic",
     }
     return googleMapsClient.directions(query).asPromise();
 }
