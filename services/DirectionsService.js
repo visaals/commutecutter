@@ -1,8 +1,7 @@
 var exports = module.exports = {};
-const constants = require('../constants');
 
 const googleMapsClient = require('@google/maps').createClient({
-    key: constants.APIKEY,
+    key: process.env.GOOGLEAPIKEY,
     Promise: Promise
 });
 
