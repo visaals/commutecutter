@@ -15,43 +15,59 @@ const AddressInput = (props) => {
   return (
     props.addresses.map((val, idx)=> {
       let addressName = `address-${idx}`
-      let commuteOptions = '';
+      let commuteOptions = <div></div>;
       if (props.includeCommuteOptions) {
         commuteOptions = 
-          <div>
+          <ButtonToolbar aria-label="Toolbar with button groups">
+            <InputGroup.Prepend>
+              <InputGroup.Text >{"Commute Type"}</InputGroup.Text>
+            </InputGroup.Prepend>            
             <ToggleButtonGroup 
-              name={"commuteType-"+val.id}
-              type="radio"
-              value={val.commuteType}
-              onChange={onChange}
-            >
-              <ToggleButton value={constants.DRIVING}>Driving</ToggleButton>
-              <ToggleButton value={constants.TRANSIT}>Transit</ToggleButton>
-              <ToggleButton value={constants.WALKING}>Walking</ToggleButton>
-              <ToggleButton value={constants.BICYCLING}>Bicycling</ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup 
-              name={"commuteDaysPerWeek-"+val.id}
-              type="radio"
-              value={val.commuteDaysPerWeek}
-              onChange={onChange}
-            >
-              <ToggleButton value={1}>1</ToggleButton>
-              <ToggleButton value={2}>2</ToggleButton>
-              <ToggleButton value={3}>3</ToggleButton>
-              <ToggleButton value={4}>4</ToggleButton>
-              <ToggleButton value={5}>5</ToggleButton>
-              <ToggleButton value={6}>6</ToggleButton>
-              <ToggleButton value={7}>7</ToggleButton>
-            </ToggleButtonGroup>
-          </div>;
+                name={"commuteType-"+val.id}
+                type="radio"
+                value={val.commuteType}
+                onChange={onChange}
+                aria-label="first group"
+                className="mr-2"
+              >
+                <ToggleButton value={constants.DRIVING}>Driving</ToggleButton>
+                <ToggleButton value={constants.TRANSIT}>Transit</ToggleButton>
+                <ToggleButton value={constants.WALKING}>Walking</ToggleButton>
+                <ToggleButton value={constants.BICYCLING}>Bicycling</ToggleButton>
+              </ToggleButtonGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text >{"Days per week"}</InputGroup.Text>
+              </InputGroup.Prepend>   
+
+              <ToggleButtonGroup 
+                name={"commuteDaysPerWeek-"+val.id}
+                type="radio"
+                value={val.commuteDaysPerWeek}
+                onChange={onChange}
+                aria-label="second group"
+                className="mr-2"
+              >
+                <ToggleButton value={1}>1</ToggleButton>
+                <ToggleButton value={2}>2</ToggleButton>
+                <ToggleButton value={3}>3</ToggleButton>
+                <ToggleButton value={4}>4</ToggleButton>
+                <ToggleButton value={5}>5</ToggleButton>
+                <ToggleButton value={6}>6</ToggleButton>
+                <ToggleButton value={7}>7</ToggleButton>
+              </ToggleButtonGroup>
+
+            </ButtonToolbar>;
       }
+
       return (
-        <div key={idx}>
+        <div key={idx} className='address-row'>
           <InputGroup>
+          
+
             <InputGroup.Prepend>
               <InputGroup.Text htmlFor={addressName}>{`Address`}</InputGroup.Text>
             </InputGroup.Prepend>
+
             <Form.Control
               as='input'
               placeholder={props.placeholder}
@@ -61,20 +77,22 @@ const AddressInput = (props) => {
               className="address"
               type='string'
             />
+
             <InputGroup.Append>
-            <ButtonToolbar>
-              {commuteOptions}
               {/* delete */}
               <ButtonGroup >
                 <Button 
                   onClick={props.deleteRow}            
                   data-id={val.id}
+                  variant="danger"
                 >
                   Delete Address
                 </Button>
               </ButtonGroup>
-              </ButtonToolbar>  
             </InputGroup.Append>
+          </InputGroup>
+          <InputGroup>
+            {commuteOptions}
           </InputGroup>
         </div>
       )

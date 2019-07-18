@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: azure;
+
 }
 
 code {
@@ -13,11 +15,11 @@ code {
 }
 
 form {
-  background-color: azure;
+  padding: 2.5%;
 }
 
-label {
-  background-color: aqua;
+.address-row {
+  margin-bottom: 10px;
 }
 
 .className {

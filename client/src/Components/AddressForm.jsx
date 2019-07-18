@@ -45,18 +45,22 @@ class AddressForm extends React.Component {
     });
   }
 
-  handleSubmit = (e) => { e.preventDefault() }
+  handleSubmit = (e) => { 
+    e.preventDefault()
+    this.props.scroll()
+  }
 
   render() {
       let {rows} = this.state
       return (
         <div className="AddressForm">
           <Form onSubmit={this.handleSubmit} onChange={this.handleChange} >
-            <Button onClick={this.addRow}>Add Address</Button>
             <Form.Group>
               <AddressInput addresses={rows} deleteRow={this.deleteRow} placeholder={this.props.placeholder} includeCommuteOptions={this.props.includeCommuteOptions}/>
             </Form.Group>
-            <Button type="submit" value="Submit">Submit</Button> 
+            <Button onClick={this.addRow}>Add Address</Button>
+
+            <Button type="submit" value="Submit" variant="success">Submit</Button> 
           </Form>
         </div>
       )
