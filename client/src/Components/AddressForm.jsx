@@ -5,45 +5,44 @@ import Form from 'react-bootstrap/Form'
 
 class AddressForm extends React.Component {
   constructor() {
-    super();
-    this.counter = 0
+    super()
+    this.counter = 4
   }
 
   state = {
-    rows: [{id:0, address:"", commuteType:1, commuteDaysPerWeek:7}],
+    rows: [{id:0, address:"", commuteType:1, commuteDaysPerWeek:5},{id:1, address:"", commuteType:1, commuteDaysPerWeek:5},{id:2, address:"", commuteType:1, commuteDaysPerWeek:5},{id:3, address:"", commuteType:1, commuteDaysPerWeek:5}],
   }
 
   handleChange = (e) => {
-      let targetName = e.target.name.split('-')[0]
-      let targetRowId = parseInt(e.target.name.split('-')[1])
-      let rows = [...this.state.rows].map(row => {
-        if (row.id == targetRowId) {
-          if (targetName === "address") {
-            row[targetName] = e.target.value
-          } else {
-            row[targetName] = parseInt(e.target.value)
-          }
+    let targetName = e.target.name.split('-')[0]
+    let targetRowId = parseInt(e.target.name.split('-')[1])
+    let rows = [...this.state.rows].map(row => {
+      if (row.id == targetRowId) {
+        if (targetName === "address") {
+          row[targetName] = e.target.value
+        } else {
+          row[targetName] = parseInt(e.target.value)
         }
-        return row
-      })
-      this.setState({ rows }, () => console.log(this.state.rows))
+      }
+      return row
+    })
+    this.setState({ rows }, () => console.log(this.state.rows))
   }
 
   addRow = (e) => {
-     this.counter++
-     let curr = this.counter
-      this.setState((prevState) => ({
-        rows: [...prevState.rows, {id:curr, address:"", commuteType:1, commuteDaysPerWeek:7}],
-      }));
+    this.counter++
+    let curr = this.counter
+    this.setState((prevState) => ({
+      rows: [...prevState.rows, {id:curr, address:"", commuteType:1, commuteDaysPerWeek:5}],
+    }));
   }
 
   deleteRow = (e) => {
-      let deleteId = e.target.dataset.id
-      console.log("deleting: " + e.target.dataset.id)
-      this.setState((prevState) => {
-        let newAddresses  = [...prevState.rows].filter(element => element.id != deleteId)
-        return {rows: newAddresses}
-      });
+    let deleteId = e.target.dataset.id
+    this.setState((prevState) => {
+      let newAddresses  = [...prevState.rows].filter(element => element.id != deleteId)
+      return {rows: newAddresses}
+    });
   }
 
   handleSubmit = (e) => { e.preventDefault() }
@@ -55,7 +54,7 @@ class AddressForm extends React.Component {
           <Form onSubmit={this.handleSubmit} onChange={this.handleChange} >
             <Button onClick={this.addRow}>Add Address</Button>
             <Form.Group>
-              <AddressInput addresses={rows} deleteRow={this.deleteRow}/>
+              <AddressInput addresses={rows} deleteRow={this.deleteRow} placeholder={this.props.placeholder} includeCommuteOptions={this.props.includeCommuteOptions}/>
             </Form.Group>
             <Button type="submit" value="Submit">Submit</Button> 
           </Form>
