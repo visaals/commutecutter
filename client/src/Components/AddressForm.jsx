@@ -4,18 +4,36 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 class AddressForm extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
-    this.counter = 4
+
+    this.numRows = props.defaultNumRows
+    this.placeholder = props.placeholder
+    this.includeCommuteOptions = props.includeCommuteOptions
+
+    this.scrollToEnd = props.scroll
+    this.propagateAddresses = props.propagateAddresses
+
+    this.setupDefaultRows();
   }
 
   state = {
-    rows: [{id:0, address:"", commuteType:1, commuteDaysPerWeek:5},{id:1, address:"", commuteType:1, commuteDaysPerWeek:5},{id:2, address:"", commuteType:1, commuteDaysPerWeek:5},{id:3, address:"", commuteType:1, commuteDaysPerWeek:5}],
+    rows: []
+  }
+
+  setupDefaultRows = () => {
+    let rows = []
+    for (let rowId = 0; rowId < this.numRows; rowId++) {
+      let newRow = this.createNewRow(rowId)
+      rows.push(newRow)
+    }
+    this.state.rows = [...rows]
+    return rows
   }
 
   handleChange = (e) => {
-    let targetName = e.target.name.split('-')[0]
-    let targetRowId = parseInt(e.target.name.split('-')[1])
+    let targetName = this.parseEventTargetName(e)
+    let targetRowId = this.parseEventTargetRowId(e)
     let rows = [...this.state.rows].map(row => {
       if (row.id == targetRowId) {
         if (targetName === "address") {
@@ -26,15 +44,34 @@ class AddressForm extends React.Component {
       }
       return row
     })
-    this.setState({ rows }, () => console.log(this.state.rows))
+    this.setState({ rows })//, () => console.log(this.state.rows))
+  }
+
+  parseEventTargetName = (e) => {
+    return e.target.name.split('-')[0]
+  }
+
+  parseEventTargetRowId = (e) => {
+    return parseInt(e.target.name.split('-')[1])
   }
 
   addRow = (e) => {
-    this.counter++
-    let curr = this.counter
+    this.numRows++
+    let newRow = this.createNewRow(this.numRows)
     this.setState((prevState) => ({
-      rows: [...prevState.rows, {id:curr, address:"", commuteType:1, commuteDaysPerWeek:5}],
+      rows: [...prevState.rows, newRow],
     }));
+  }
+
+  createNewRow = (newRowId) => {
+    let newRow = {}
+    newRow.id = newRowId
+    newRow.address = ""
+    if (this.includeCommuteOptions) {
+      newRow.commuteType = 1
+      newRow.commuteDaysPerWeek = 5
+    }
+    return newRow;
   }
 
   deleteRow = (e) => {
@@ -47,7 +84,8 @@ class AddressForm extends React.Component {
 
   handleSubmit = (e) => { 
     e.preventDefault()
-    this.props.scroll()
+    this.scrollToEnd()
+    this.propagateAddresses(this.state.rows)
   }
 
   render() {
@@ -56,14 +94,19 @@ class AddressForm extends React.Component {
         <div className="AddressForm">
           <Form onSubmit={this.handleSubmit} onChange={this.handleChange} >
             <Form.Group>
-              <AddressInput addresses={rows} deleteRow={this.deleteRow} placeholder={this.props.placeholder} includeCommuteOptions={this.props.includeCommuteOptions}/>
+              <AddressInput 
+                addresses={rows} 
+                deleteRow={this.deleteRow} 
+                placeholder={this.placeholder} 
+                includeCommuteOptions={this.includeCommuteOptions}
+              />
             </Form.Group>
             <Button onClick={this.addRow}>Add Address</Button>
-
             <Button type="submit" value="Submit" variant="success">Submit</Button> 
           </Form>
         </div>
       )
   }
 }
+
 export default AddressForm;

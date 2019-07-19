@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import AddressForm from './Components/AddressForm.jsx'
 import CCFormContainer from './Containers/CCFormContainer.jsx'
 
 class App extends Component {
@@ -13,5 +12,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;

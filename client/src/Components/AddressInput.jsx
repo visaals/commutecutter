@@ -36,7 +36,7 @@ const AddressInput = (props) => {
                 <ToggleButton value={constants.BICYCLING}>Bicycling</ToggleButton>
               </ToggleButtonGroup>
               <InputGroup.Prepend>
-                <InputGroup.Text >{"Days per week"}</InputGroup.Text>
+                <InputGroup.Text >{"Days Per Week"}</InputGroup.Text>
               </InputGroup.Prepend>   
 
               <ToggleButtonGroup 
@@ -63,7 +63,6 @@ const AddressInput = (props) => {
         <div key={idx} className='address-row'>
           <InputGroup>
           
-
             <InputGroup.Prepend>
               <InputGroup.Text htmlFor={addressName}>{`Address`}</InputGroup.Text>
             </InputGroup.Prepend>
@@ -90,10 +89,13 @@ const AddressInput = (props) => {
                 </Button>
               </ButtonGroup>
             </InputGroup.Append>
+
           </InputGroup>
+
           <InputGroup>
             {commuteOptions}
           </InputGroup>
+
         </div>
       )
     })
