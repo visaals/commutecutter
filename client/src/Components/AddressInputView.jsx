@@ -7,7 +7,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 
-const AddressInput = (props) => {
+const AddressInputView = (props) => {
   const onChange = (e) => {
       // here to get rid of warning
   }
@@ -101,4 +101,4 @@ const AddressInput = (props) => {
     })
   )
 }
-export default AddressInput;
+export default AddressInputView;

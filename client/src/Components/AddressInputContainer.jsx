@@ -1,9 +1,9 @@
 import React from "react"
-import AddressInput from "./AddressInput.jsx"
+import AddressInputView from "./AddressInputView.jsx"
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-class AddressForm extends React.Component {
+class AddressInputContainer extends React.Component {
   constructor(props) {
     super()
 
@@ -94,7 +94,7 @@ class AddressForm extends React.Component {
         <div className="AddressForm">
           <Form onSubmit={this.handleSubmit} onChange={this.handleChange} >
             <Form.Group>
-              <AddressInput 
+              <AddressInputView 
                 addresses={rows} 
                 deleteRow={this.deleteRow} 
                 placeholder={this.placeholder} 
@@ -109,4 +109,4 @@ class AddressForm extends React.Component {
   }
 }
 
-export default AddressForm;
+export default AddressInputContainer;
