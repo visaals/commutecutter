@@ -1,5 +1,7 @@
 import React from "react"
 import AddressInputContainer from "../Components/AddressInputContainer";
+import Button from "react-bootstrap/Button";
+const axios = require('axios')
 
 class CCFormContainer extends React.Component {
 
@@ -11,6 +13,27 @@ class CCFormContainer extends React.Component {
         this.commuteAddressPlaceholder = "Enter the address of a potential commute"
     }
 
+    testRequest = () => {
+        console.log("testing request...")
+        console.log(this.state.addresses)
+        console.log(this.state.commutes)
+        const instance = axios.create({
+            baseURL: 'https://secure-depths-82332.herokuapp.com/api',
+            timeout: 1000,
+            headers: {'Content-Type': 'application/json'}
+          });
+        instance.post('/bulk-directions', {
+            sourceAddresses: this.state.addresses,
+            commutes: this.state.commutes
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+    
     state = {
         addresses: [],
         commutes: []
@@ -61,14 +84,12 @@ class CCFormContainer extends React.Component {
                     <h3>Step 3: Check your Addresses!</h3>
                     <p>If the addresses look right you are good to go! Otherwise edit them above and resubmit.</p>
                     <p>
-
                         {JSON.stringify(this.state.addresses)}
                     </p>
                     <p>
                     {JSON.stringify(this.state.commutes)}
-
                     </p>
-                
+                    <Button onClick={this.testRequest}>Test Request</Button>
                 </div>
 
 
