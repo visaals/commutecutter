@@ -1,7 +1,9 @@
 import React from "react"
-import AddressInputContainer from "../Components/AddressInputContainer";
+import AddressInputContainer from "./AddressInputContainer"
+import AddressCommuteTableView from "../Views/AddressCommuteTableView"
 import Button from "react-bootstrap/Button";
 const axios = require('axios')
+const constants = require('../constants')
 
 class CCFormContainer extends React.Component {
 
@@ -19,7 +21,7 @@ class CCFormContainer extends React.Component {
         console.log(this.state.commutes)
         const instance = axios.create({
             baseURL: 'https://secure-depths-82332.herokuapp.com/api',
-            timeout: 1000,
+            timeout: 10000,
             headers: {'Content-Type': 'application/json'}
           });
         instance.post('/bulk-directions', {
@@ -44,12 +46,18 @@ class CCFormContainer extends React.Component {
     }
 
     setAddresses = (addresses) => {
+        addresses = addresses.map(address => address.address)
         this.setState({
             addresses: addresses
         })
     }
 
     setCommutes = (commutes) => {
+        commutes = commutes.map(commute => {
+            commute.destinationAddress = commute.address
+            commute.commuteType = constants[commute.commuteType]
+            return commute
+        })
         this.setState({
             commutes: commutes
         })
@@ -87,8 +95,12 @@ class CCFormContainer extends React.Component {
                         {JSON.stringify(this.state.addresses)}
                     </p>
                     <p>
-                    {JSON.stringify(this.state.commutes)}
+                        {JSON.stringify(this.state.commutes)}
                     </p>
+                    <AddressCommuteTableView 
+                            addresses={this.state.addresses}
+                            commutes={this.state.commutes} 
+                            />
                     <Button onClick={this.testRequest}>Test Request</Button>
                 </div>
 

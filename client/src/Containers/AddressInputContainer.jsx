@@ -1,5 +1,5 @@
 import React from "react"
-import AddressInputView from "./AddressInputView.jsx"
+import AddressInputView from "../Views/AddressInputView.jsx"
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
