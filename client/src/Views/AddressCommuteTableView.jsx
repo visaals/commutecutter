@@ -10,6 +10,9 @@ import Table from 'react-bootstrap/Table'
 
 function generateRows (addresses, commutes) {
     let rows = []
+    addresses = addresses.filter(e => e !== "");
+    commutes = commutes.filter(e => e.address !== "");
+
     if (addresses.length >= commutes.length) {
         for (let i = 0; i < addresses.length; i++) {
             let row = []
@@ -42,19 +45,24 @@ function generateRows (addresses, commutes) {
     return rows
 }
 
+function generateTableRow(row, id) {
+    let htmlRow = [];
+    for (let i = 0; i < row.length; i++) {
+        let col = row[i]
+        htmlRow.push(<td id={`${i}-${id}`}>{col}</td>)
+    }
+    return htmlRow;
+}
+
+
 
 const AddressCommuteTableView = (props) => {
-
     let addresses = props.addresses
     let commutes = props.commutes
-
     let rows = generateRows(addresses, commutes)
-    console.log(rows)
-    console.log(props)
     return (
-
         <div>
-            <Table>
+            <Table striped border hover>
                 <thead>
                     <tr>
                         <th>Potential Homes</th>
@@ -64,13 +72,12 @@ const AddressCommuteTableView = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr></tr>
+                    {rows.map((row, idx) => {
+                        return <tr id={idx}>{generateTableRow(row, idx)}</tr>
+                    })}
                 </tbody>
             </Table>
         </div>
     )
-    
-
- 
 }
 export default AddressCommuteTableView;

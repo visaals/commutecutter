@@ -98,12 +98,7 @@ class CCFormContainer extends React.Component {
                 <div ref={this.stepTwoEndRef}>
                     <h3>Step 3: Check your Addresses!</h3>
                     <p>If the addresses look right you are good to go! Otherwise edit them above and resubmit.</p>
-                    <p>
-                        {JSON.stringify(this.state.addresses)}
-                    </p>
-                    <p>
-                        {JSON.stringify(this.state.commutes)}
-                    </p>
+
                     <AddressCommuteTableView 
                             addresses={this.state.addresses}
                             commutes={this.state.commutes} 
