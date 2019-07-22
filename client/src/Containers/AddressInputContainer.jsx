@@ -84,8 +84,13 @@ class AddressInputContainer extends React.Component {
 
   handleSubmit = (e) => { 
     e.preventDefault()
+    console.log("ooo" + JSON.stringify(this.state.rows))
+
     this.scrollToEnd()
     this.propagateAddresses(this.state.rows)
+    console.log("ooo1" + JSON.stringify(this.state.rows))
+
+
   }
 
   render() {

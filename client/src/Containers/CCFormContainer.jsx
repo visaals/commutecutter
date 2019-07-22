@@ -13,6 +13,7 @@ class CCFormContainer extends React.Component {
         this.stepTwoEndRef = React.createRef()
         this.addressPlaceholder = "Enter the address of a potential home"
         this.commuteAddressPlaceholder = "Enter the address of a potential commute"
+
     }
 
     testRequest = () => {
@@ -52,14 +53,20 @@ class CCFormContainer extends React.Component {
         })
     }
 
-    setCommutes = (commutes) => {
-        commutes = commutes.map(commute => {
-            commute.destinationAddress = commute.address
-            commute.commuteType = constants[commute.commuteType]
-            return commute
-        })
+    setCommutes = (rawCommutes) => {
+        let newCommutes = []
+        for (let i = 0; i < rawCommutes.length; i++) {
+            let newCommute = {}
+            let rawCommute = rawCommutes[i]
+            newCommute.id = rawCommute.id;
+            newCommute.address = rawCommute.address
+            newCommute.destinationAddress = rawCommute.address
+            newCommute.commuteType = constants[rawCommute.commuteType]
+            newCommute.commuteDaysPerWeek = rawCommute.commuteDaysPerWeek
+            newCommutes.push(newCommute)
+        }
         this.setState({
-            commutes: commutes
+            commutes: newCommutes
         })
     }
 
