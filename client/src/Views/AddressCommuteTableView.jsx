@@ -64,7 +64,7 @@ const AddressCommuteTableView = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>{}</tr>
+                    <tr></tr>
                 </tbody>
             </Table>
         </div>
