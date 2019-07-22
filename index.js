@@ -6,11 +6,11 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
 
+app.use(express.static(path.join(__dirname, 'client/build')))
 
 // Serve static files from the React app
 // app.use()
 app.use(function(req, res, next) {
-  app.use(express.static(path.join(__dirname, '/client/build')))
 
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
