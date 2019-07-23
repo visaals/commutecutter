@@ -1,11 +1,4 @@
 import React from "react"
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import Button from 'react-bootstrap/Button'
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
-import ToggleButton from 'react-bootstrap/ToggleButton'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Form from 'react-bootstrap/Form'
-import InputGroup from 'react-bootstrap/InputGroup'
 import Table from 'react-bootstrap/Table'
 
 function generateRows (addresses, commutes) {
@@ -54,8 +47,6 @@ function generateTableRow(row, id) {
     return htmlRow;
 }
 
-
-
 const AddressCommuteTableView = (props) => {
     let addresses = props.addresses
     let commutes = props.commutes
@@ -80,4 +71,5 @@ const AddressCommuteTableView = (props) => {
         </div>
     )
 }
+
 export default AddressCommuteTableView;
