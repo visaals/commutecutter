@@ -8,7 +8,6 @@ class RouteBuilder {
         this.commutes = commutes;
         this.routeQueries = [];
         this._buildRoute = this._buildRoute.bind(this);
-
         this._populateRouteQueries();
     }
 
@@ -40,7 +39,7 @@ class RouteBuilder {
     _buildRoute(routeQuery) {
         let route = this._getLatLngPair(routeQuery)
             .then(directionsService.computeRoute)
-            .then(this._extractRouteData)
+            .then((response) => this._extractRouteData(response, routeQuery))
             .then(route => this._multiplyRouteByCommuteFrequency(route, routeQuery))
             .catch(errMsg => this._showError(errMsg, routeQuery));
         return route;
@@ -52,13 +51,16 @@ class RouteBuilder {
         return Promise.all([getSourceLatLng, getDestinationLatLng, routeQuery.commuteType]);
     }
     
-    _extractRouteData (response) {
+    _extractRouteData (response, routeQuery) {
         if (response.json.status !== 'OK') {
             throw "Directions API call failed. Status: " + response.json.status;
         }
         let legs = response.json.routes[0].legs[0];
         let distance = legs.distance;
-        let duration = legs.duration_in_traffic;
+        let duration = legs.duration;
+        if (routeQuery.commuteType === "driving") {
+            duration = legs.duration_in_traffic
+        }
         let startAddress = legs.start_address;
         let endAddress = legs.end_address;
         let route = [distance, duration, startAddress, endAddress];
@@ -67,11 +69,11 @@ class RouteBuilder {
     
     _multiplyRouteByCommuteFrequency(route, routeQuery) {
         let daysPerWeek = routeQuery.commuteDaysPerWeek;
-        let miles = parseInt(route[0].text.split(" ")[0]);
+        let miles = parseFloat(route[0].text.split(" ")[0]) * 2; // 2 because commute distance is there and back
         let distanceUnit = route[0].text.split(" ")[1];
-        let time = this.convertGoogleMapsTimeToSeconds(route[1].text); 
+        let time = this.convertGoogleMapsTimeToSeconds(route[1].text) * 2; // 2 because commute time is 2 way 
         route[0] = (miles * daysPerWeek) + " " + distanceUnit;
-        route[1] = this.secondsToDHM((time * daysPerWeek)) + " seconds total, " + this.secondsToDHM(time) + " per commute";
+        route[1] = this.secondsToDHM((time * daysPerWeek)) + " total, " + this.secondsToDHM(time/2) + " per commute";
         return route;
     }
     
@@ -131,9 +133,9 @@ class RouteBuilder {
     }
     
     _showError (errMsg, routeQuery) {
-        console.log(errMsg);
+        console.log("errMsg: " + errMsg);
         return "Please select a different travel mode for this route from "
-            + routeQuery.sourceAddress + " to " + routeQuery.destinationAddress;
+            + routeQuery.sourceAddress + " to " + routeQuery.destinationAddress + ", errMsg: " + errMsg;
     }
 }
 

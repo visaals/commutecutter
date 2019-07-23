@@ -20,8 +20,10 @@ class CCFormContainer extends React.Component {
         console.log("testing request...")
         console.log(this.state.addresses)
         console.log(this.state.commutes)
+        let herokuAPI = 'https://secure-depths-82332.herokuapp.com/api'
+        let localAPI = "http://localhost:5000/api"
         const instance = axios.create({
-            baseURL: 'https://secure-depths-82332.herokuapp.com/api',
+            baseURL: localAPI,
             timeout: 10000,
             headers: {'Content-Type': 'application/json'}
           });
@@ -30,10 +32,10 @@ class CCFormContainer extends React.Component {
             commutes: this.state.commutes
         })
         .then(function (response) {
-            console.log(response);
+            console.log("response: " + JSON.stringify(response));
         })
         .catch(function (error) {
-            console.log(error);
+            console.log("error: " + error);
         });
     }
     
