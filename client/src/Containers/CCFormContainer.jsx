@@ -80,7 +80,7 @@ class CCFormContainer extends React.Component {
                 </div>
                 <AddressInputContainer 
                     placeholder={this.addressPlaceholder} 
-                    defaultNumRows={4}
+                    defaultNumRows={2}
                     includeCommuteOptions={false} 
                     scroll={() => this.scrollToNextStep(this.stepOneEndRef)}
                     propagateAddresses={this.setAddresses}
@@ -92,7 +92,7 @@ class CCFormContainer extends React.Component {
                 </div>
                 <AddressInputContainer 
                     placeholder={this.commuteAddressPlaceholder}
-                    defaultNumRows={4}
+                    defaultNumRows={2}
                     includeCommuteOptions={true} 
                     scroll={() => this.scrollToNextStep(this.stepTwoEndRef)}
                     propagateAddresses={this.setCommutes}

@@ -1,6 +1,5 @@
 const geocodeService = require('../services/GeocodeService');
 const directionsService = require('../services/DirectionsService');
-const timeUtility = 0;
 
 class RouteBuilder {    
     constructor(sourceAddresses, commutes) {
@@ -74,6 +73,8 @@ class RouteBuilder {
         let time = this.convertGoogleMapsTimeToSeconds(route[1].text) * 2; // 2 because commute time is 2 way 
         route[0] = (miles * daysPerWeek) + " " + distanceUnit;
         route[1] = this.secondsToDHM((time * daysPerWeek)) + " total, " + this.secondsToDHM(time/2) + " per commute";
+        route.push(time)
+        route.push(daysPerWeek)
         return route;
     }
     

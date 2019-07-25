@@ -53,7 +53,7 @@ const AddressCommuteTableView = (props) => {
     let rows = generateRows(addresses, commutes)
     return (
         <div>
-            <Table striped border hover>
+            <Table striped hover border={"striped"}>
                 <thead>
                     <tr>
                         <th>Potential Homes</th>

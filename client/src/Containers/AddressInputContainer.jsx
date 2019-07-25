@@ -7,6 +7,15 @@ class AddressInputContainer extends React.Component {
   constructor(props) {
     super()
 
+    this.testAddresses = [
+      "225 Bush Street San Francisco, CA", 
+      "1550 Bryant St #200, San Francisco, CA 94103",
+      "560 Sutter St Suite 300, San Francisco, CA 94102",
+      "1266 Utah St, San Francisco, CA 94110",
+      "1660 Florida Street, San Francisco, CA",
+      "2901 Diamond St, San Francisco, CA 94131"
+    ]
+    
     this.numRows = props.defaultNumRows
     this.placeholder = props.placeholder
     this.includeCommuteOptions = props.includeCommuteOptions
@@ -66,7 +75,8 @@ class AddressInputContainer extends React.Component {
   createNewRow = (newRowId) => {
     let newRow = {}
     newRow.id = newRowId
-    newRow.address = ""
+    let randomIdx = Math.floor(Math.random() * this.testAddresses.length)
+    newRow.address = this.testAddresses[randomIdx]
     if (this.includeCommuteOptions) {
       newRow.commuteType = 1
       newRow.commuteDaysPerWeek = 5
