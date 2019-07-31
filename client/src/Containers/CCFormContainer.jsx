@@ -13,13 +13,13 @@ class CCFormContainer extends React.Component {
         this.stepTwoEndRef = React.createRef()
         this.addressPlaceholder = "Enter the address of a potential home"
         this.commuteAddressPlaceholder = "Enter the address of a potential commute"
-
     }
 
     testRequest = () => {
         console.log("testing request...")
         console.log(this.state.addresses)
         console.log(this.state.commutes)
+
         let herokuAPI = 'https://secure-depths-82332.herokuapp.com/api'
         let localAPI = "http://localhost:5000/api"
         const instance = axios.create({
@@ -32,7 +32,19 @@ class CCFormContainer extends React.Component {
             commutes: this.state.commutes
         })
         .then(function (response) {
-            console.log("response: " + JSON.stringify(response));
+            console.log("response: " + JSON.stringify(response, null, 2));
+            
+            for (let i = 0; i < response.length; i++) {
+                let commuteDuration = response[i]
+                let totalDistance = commuteDuration[0]
+                let totalTime = commuteDuration[1]
+                let sourceAddress = commuteDuration[2]
+                let destinationAddress = commuteDuration[3]
+            }
+            this.setState({
+                response: []
+            });
+
         })
         .catch(function (error) {
             console.log("error: " + error);
@@ -41,7 +53,8 @@ class CCFormContainer extends React.Component {
     
     state = {
         addresses: [],
-        commutes: []
+        commutes: [],
+        response: []
     }
 
     scrollToNextStep = (step) => {
