@@ -140,4 +140,9 @@ class RouteBuilder {
     }
 }
 
+
+class TimeConverter {
+    
+}
+
 module.exports = RouteBuilder;
