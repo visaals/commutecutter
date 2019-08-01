@@ -17,7 +17,6 @@ exports.convertAddressToLatLng = function (address) {
     function handleGeocodeFailure (error) {
         throw "LatLng Conversion Request Failed: " + JSON.stringify(error);
     }
-
     return geocodeRequest;
 }
 

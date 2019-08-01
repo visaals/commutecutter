@@ -42,7 +42,7 @@ function generateTableRow(row, id) {
     let htmlRow = [];
     for (let i = 0; i < row.length; i++) {
         let col = row[i]
-        htmlRow.push(<td id={`${i}-${id}`}>{col}</td>)
+        htmlRow.push(<td key={`${i}-${id}`}>{col}</td>)
     }
     return htmlRow;
 }
@@ -64,7 +64,7 @@ const AddressCommuteTableView = (props) => {
                 </thead>
                 <tbody>
                     {rows.map((row, idx) => {
-                        return <tr id={idx}>{generateTableRow(row, idx)}</tr>
+                        return <tr key={idx}>{generateTableRow(row, idx)}</tr>
                     })}
                 </tbody>
             </Table>

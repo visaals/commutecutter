@@ -4,6 +4,8 @@ import AddressCommuteTableView from "../Views/AddressCommuteTableView"
 import Button from "react-bootstrap/Button";
 const axios = require('axios')
 const constants = require('../constants')
+var CommuteFormatter = require('../Utilities/CommuteFormatter');
+
 
 class CCFormContainer extends React.Component {
 
@@ -32,29 +34,52 @@ class CCFormContainer extends React.Component {
             commutes: this.state.commutes
         })
         .then(function (response) {
-            console.log("response: " + JSON.stringify(response, null, 2));
             
-            for (let i = 0; i < response.length; i++) {
-                let commuteDuration = response[i]
-                let totalDistance = commuteDuration[0]
-                let totalTime = commuteDuration[1]
-                let sourceAddress = commuteDuration[2]
-                let destinationAddress = commuteDuration[3]
+            let data = response.data
+            let queryData = JSON.parse(response.config.data)
+
+            let queryAddresses = queryData.sourceAddresses
+            let queryCommutes = queryData.commutes
+
+            let homes = []
+            let idx = 0;
+            for (let i = 0; i < queryAddresses.length; i++) {
+                let commuteTickets = []
+                for (let j = 0; j < queryCommutes.length; j++) {
+                    let ticket = data[idx];
+                    ticket.push(queryCommutes[j].commuteType)
+                    ticket.push(queryCommutes[j].commuteDaysPerWeek)
+                    commuteTickets.push(data[idx])
+                    idx++
+                }
+                homes.push(commuteTickets)
             }
-            this.setState({
-                response: []
-            });
+
+            for (let i = 0; i < homes.length; i++) {
+                let home = homes[i]
+                for (let j = 0; j < home.length; j++) {
+                    let commute = home[j]
+                    let commuteFormatter = new CommuteFormatter(commute)
+                    let formattedCommute = commuteFormatter.formatAndApplyCommuteFrequency()
+                    console.log("formatted Commute: " + JSON.stringify(formattedCommute, null, 2))
+                }
+                console.log("-------------------")
+            }
+
+           // console.log("homes: " + JSON.stringify(homes, null, 2))
+
+            
+
 
         })
         .catch(function (error) {
-            console.log("error: " + error);
+            console.log("post error: " + error);
         });
     }
     
     state = {
         addresses: [],
         commutes: [],
-        response: []
     }
 
     scrollToNextStep = (step) => {
