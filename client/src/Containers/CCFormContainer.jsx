@@ -57,16 +57,19 @@ class CCFormContainer extends React.Component {
 
             for (let i = 0; i < homes.length; i++) {
                 let home = homes[i]
+                let totalCommute = new CommuteFormatter()
                 for (let j = 0; j < home.length; j++) {
                     let commute = home[j]
                     let commuteFormatter = new CommuteFormatter(commute)
+                    totalCommute.combineRawCommute(commuteFormatter)
                     let formattedCommute = commuteFormatter.formatAndApplyCommuteFrequency()
                     console.log("formatted Commute: " + JSON.stringify(formattedCommute, null, 2))
                 }
+
+                console.log("total commute: " + JSON.stringify(totalCommute, null, 2))
                 console.log("-------------------")
             }
 
-           // console.log("homes: " + JSON.stringify(homes, null, 2))
 
             
 

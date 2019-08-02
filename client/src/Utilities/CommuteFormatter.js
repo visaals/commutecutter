@@ -16,41 +16,78 @@ class CommuteFormatter {
     ]
     */
     constructor (commute) {
-        this.meters = commute[0].value
-        this.seconds = commute[1].value
 
-        this.source = commute[2]
-        this.destination = commute[3]
-        this.commuteType = commute[4]
-        this.commuteDaysPerWeek = commute[5]
+        if (commute === undefined) {
+            this.meters = 0
+            this.seconds = 0
+
+            this.source = ""
+            this.destination = ""
+            this.commuteType = ""
+            this.commuteDaysPerWeek = 0
+        } else {
+            this.meters = commute[0].value
+            this.seconds = commute[1].value
+    
+            this.source = commute[2]
+            this.destination = commute[3]
+            this.commuteType = commute[4]
+            this.commuteDaysPerWeek = commute[5]
+        }
+
+        this.totalSeconds = 0
+        this.totalCommuteTimeString = ""
+        this.totalCommuteMiles = 0
+        this.totalCommuteMeters = 0
+        this.miles = 0
+
+        this.calculateTotalStatistics()
+
+    }
+
+    calculateTotalStatistics () {
+        this.totalSeconds = this.seconds * this.commuteDaysPerWeek * 2
+        this.totalCommuteTimeString = this._secondsToHourMinute(this.totalSeconds)
+        this.totalCommuteMeters = this.meters * this.commuteDaysPerWeek * 2
+
+        this.miles = this._metersToMiles(this.meters)
+        this.totalCommuteMiles = this.miles * this.commuteDaysPerWeek * 2
     }
 
     formatAndApplyCommuteFrequency () {
 
         let timeString = this._secondsToHourMinute(this.seconds)
-        let distance = this._metersToMiles(this.meters)
-
-        let totalSeconds = this.seconds * this.commuteDaysPerWeek * 2
-        let totalMeters = this.meters * this.commuteDaysPerWeek * 2
-
-        let totalCommuteTimeString = this._secondsToHourMinute(totalSeconds)
-        let totalCommuteMiles = this._metersToMiles(totalMeters)
-
-
 
         return {
             "timeString": timeString,
-            "totalTimeString": totalCommuteTimeString,
+            "totalTimeString": this.totalCommuteTimeString,
             "seconds": this.seconds,
-            "totalSeconds": totalSeconds,
-            "distance": distance,
-            "totalDistance": totalCommuteMiles,
+            "totalSeconds": this.totalSeconds,
+            "miles": this.miles,
+            "totalDistance": this.totalCommuteMiles,
             "source": this.source,
             "destination": this.destination,
             "commuteType": this.commuteType,
             "commuteDaysPerWeek": this.commuteDaysPerWeek
         }
 
+    }
+
+    combineRawCommute (CommuteFormatterObject) {
+        this.meters += CommuteFormatterObject.meters
+        this.seconds += CommuteFormatterObject.seconds
+
+        this.totalSeconds += CommuteFormatterObject.totalSeconds
+        this.totalCommuteMiles += CommuteFormatterObject.totalCommuteMiles
+        this.totalCommuteMeters += CommuteFormatterObject.totalCommuteMeters
+        this.totalCommuteTimeString = this._secondsToHourMinute(this.totalSeconds)
+
+        if (this.source === "") {
+            this.source = CommuteFormatterObject.source
+        }
+        
+        this.miles = this._metersToMiles(this.meters)
+        
     }
 
     _metersToMiles (meters) {
