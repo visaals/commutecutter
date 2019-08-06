@@ -18,7 +18,7 @@ class CommuteResultsContainer extends React.Component {
         let herokuAPI = 'https://secure-depths-82332.herokuapp.com/api'
         let localAPI = "http://localhost:5000/api"
         const instance = axios.create({
-            baseURL: localAPI,
+            baseURL: herokuAPI,
             timeout: 10000,
             headers: {'Content-Type': 'application/json'}
           });
