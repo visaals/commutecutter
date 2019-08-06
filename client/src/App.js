@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import CCFormContainer from './Containers/CCFormContainer.jsx'
+import FormContainer from './Containers/FormContainer.jsx'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 
@@ -20,7 +20,7 @@ class App extends Component {
         
         <br></br>
 
-        <CCFormContainer />
+        <FormContainer />
       </div>
     );
   }

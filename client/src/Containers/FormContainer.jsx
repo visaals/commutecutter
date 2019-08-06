@@ -1,10 +1,9 @@
 import React from "react"
 import AddressInputContainer from "./AddressInputContainer"
 import AddressCommuteTableView from "../Views/AddressCommuteTableView"
-import Button from "react-bootstrap/Button";
-const axios = require('axios')
+
+import CommuteResultsContainer from "./CommuteResultsContainer";
 const constants = require('../constants')
-var CommuteFormatter = require('../Utilities/CommuteFormatter');
 
 
 class CCFormContainer extends React.Component {
@@ -13,73 +12,13 @@ class CCFormContainer extends React.Component {
         super()
         this.stepOneEndRef = React.createRef()
         this.stepTwoEndRef = React.createRef()
+        this.stepThreeEndRef = React.createRef()
+        this.stepFourEndRef = React.createRef()
+
         this.addressPlaceholder = "Enter the address of a potential home"
         this.commuteAddressPlaceholder = "Enter the address of a potential commute"
     }
 
-    testRequest = () => {
-        console.log("testing request...")
-        console.log(this.state.addresses)
-        console.log(this.state.commutes)
-
-        let herokuAPI = 'https://secure-depths-82332.herokuapp.com/api'
-        let localAPI = "http://localhost:5000/api"
-        const instance = axios.create({
-            baseURL: localAPI,
-            timeout: 10000,
-            headers: {'Content-Type': 'application/json'}
-          });
-        instance.post('/bulk-directions', {
-            sourceAddresses: this.state.addresses,
-            commutes: this.state.commutes
-        })
-        .then(function (response) {
-            
-            let data = response.data
-            let queryData = JSON.parse(response.config.data)
-
-            let queryAddresses = queryData.sourceAddresses
-            let queryCommutes = queryData.commutes
-
-            let homes = []
-            let idx = 0;
-            for (let i = 0; i < queryAddresses.length; i++) {
-                let commuteTickets = []
-                for (let j = 0; j < queryCommutes.length; j++) {
-                    let ticket = data[idx];
-                    ticket.push(queryCommutes[j].commuteType)
-                    ticket.push(queryCommutes[j].commuteDaysPerWeek)
-                    commuteTickets.push(data[idx])
-                    idx++
-                }
-                homes.push(commuteTickets)
-            }
-
-            for (let i = 0; i < homes.length; i++) {
-                let home = homes[i]
-                let totalCommute = new CommuteFormatter()
-                for (let j = 0; j < home.length; j++) {
-                    let commute = home[j]
-                    let commuteFormatter = new CommuteFormatter(commute)
-                    totalCommute.combineRawCommute(commuteFormatter)
-                    let formattedCommute = commuteFormatter.formatAndApplyCommuteFrequency()
-                    console.log("formatted Commute: " + JSON.stringify(formattedCommute, null, 2))
-                }
-
-                console.log("total commute: " + JSON.stringify(totalCommute, null, 2))
-                console.log("-------------------")
-            }
-
-
-            
-
-
-        })
-        .catch(function (error) {
-            console.log("post error: " + error);
-        });
-    }
-    
     state = {
         addresses: [],
         commutes: [],
@@ -129,7 +68,6 @@ class CCFormContainer extends React.Component {
                 <div ref={this.stepOneEndRef}>
                     <h3>Step 2: Enter the addresses of places you want to commute</h3>
                     <p>This could be where you and your roommates work, your favorite gym/grocery store/coffee shop, etc.</p>
-
                 </div>
                 <AddressInputContainer 
                     placeholder={this.commuteAddressPlaceholder}
@@ -141,12 +79,22 @@ class CCFormContainer extends React.Component {
                 <div ref={this.stepTwoEndRef}>
                     <h3>Step 3: Check your Addresses!</h3>
                     <p>If the addresses look right you are good to go! Otherwise edit them above and resubmit.</p>
-
                     <AddressCommuteTableView 
-                            addresses={this.state.addresses}
-                            commutes={this.state.commutes} 
-                            />
-                    <Button onClick={this.testRequest}>Test Request</Button>
+                        addresses={this.state.addresses}
+                        commutes={this.state.commutes} 
+                    />
+                </div>
+
+                <div ref={this.stepThreeEndRef}>
+                    <h3>Step 4: Get your commutes!</h3>
+                    <p>Here are the homes with the shortest commute</p>
+                    <CommuteResultsContainer 
+                        addresses={this.state.addresses}
+                        commutes={this.state.commutes}
+                    />
+                </div>
+                <div ref={this.stepFourEndRef}>
+                    <p>Well, here are how long you're going to spend commuting at each aparmtent!</p>
                 </div>
 
 
