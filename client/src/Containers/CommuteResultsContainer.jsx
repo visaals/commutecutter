@@ -1,8 +1,9 @@
 import React from 'react'
 import Button from "react-bootstrap/Button"
 import CommuteResultsView from "../Views/CommuteResultsView"
+import CommuteFormatter from '../Utilities/CommuteFormatter'
+
 const axios = require('axios')
-var CommuteFormatter = require('../Utilities/CommuteFormatter');
 
 class CommuteResultsContainer extends React.Component {
 

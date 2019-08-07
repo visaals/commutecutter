@@ -1,20 +1,4 @@
 class CommuteFormatter {
-    /*
-    [
-        {
-        "text": "1.5 mi",
-        "value": 2475
-        },
-        {
-        "text": "16 mins",
-        "value": 967
-        },
-        "1266 Utah St, San Francisco, CA 94110, USA",
-        "1550 Bryant St, San Francisco, CA 94103, USA",
-        "transit",
-        2
-    ]
-    */
     constructor (commute) {
 
         if (commute === undefined) {

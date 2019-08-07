@@ -1,7 +1,6 @@
 import React from "react"
 import AddressInputContainer from "./AddressInputContainer"
 import AddressCommuteTableView from "../Views/AddressCommuteTableView"
-
 import CommuteResultsContainer from "./CommuteResultsContainer";
 const constants = require('../constants')
 
