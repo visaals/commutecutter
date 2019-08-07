@@ -86,4 +86,4 @@ class CommuteFormatter {
     }
 }
 
-module.exports = CommuteFormatter;
+export default CommuteFormatter;
