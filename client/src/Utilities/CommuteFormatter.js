@@ -82,6 +82,9 @@ class CommuteFormatter {
         let hours = Math.floor(seconds/3600);
         seconds %= 3600;
         let minutes = Math.floor(seconds/60);
+        if (hours === 0) {
+            return minutes + " m"
+        }
         return hours + " h " + minutes + " m";
     }
 }

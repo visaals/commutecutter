@@ -7,6 +7,11 @@ const axios = require('axios')
 
 class CommuteResultsContainer extends React.Component {
 
+    constructor(props) {
+        super(props)
+        this.sendRequest()
+    }
+
     state = {
         tickets: []
     }
@@ -34,6 +39,7 @@ class CommuteResultsContainer extends React.Component {
     }
 
     formatAndSetState (response) {
+        
             
         let data = response.data
         let queryData = JSON.parse(response.config.data)
@@ -74,6 +80,7 @@ class CommuteResultsContainer extends React.Component {
         this.setState({
             tickets: formattedTickets
         })
+        // this.props.scroll();
     }
 
     summarizeTickets (tickets) {
@@ -106,7 +113,7 @@ class CommuteResultsContainer extends React.Component {
     render () {
         return (
             <div>
-                <Button onClick={this.sendRequest}>Find Commutes</Button>
+                {/* <Button onClick={this.sendRequest}>Find Commutes</Button> */}
                 <CommuteResultsView
                     tickets={this.summarizeTickets(this.state.tickets)}
                 />
